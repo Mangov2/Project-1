@@ -1,0 +1,13 @@
+Identifier : [a-zA-Z][a-zA-Z0-9]*
+Integer : [0-9]+
+
+Q = { q0, q1, q2, q3 }
+Σ = { a-zA-Z0-9 }
+δ : Q x Σ -> Q
+δ(q0, a) = q1
+δ(q1, a) = q1 if a is a letter or digit
+δ(q1, _) = q2
+δ(q2, a) = q2 if a is a letter or digit
+δ(q2, _) = q3
+
+F = { q3 }
