@@ -1,0 +1,47 @@
+def lexer(source_code):
+  
+
+  current_char = source_code[0]
+  lexeme = ""
+  token = None
+
+  while current_char != "":
+    if current_char.isalpha():
+      lexeme += current_char
+      while current_char.isalnum():
+        current_char = source_code[1]
+        lexeme += current_char
+      token = "identifier"
+    elif current_char.isdigit():
+      lexeme += current_char
+      while current_char.isdigit():
+        current_char = source_code[1]
+        lexeme += current_char
+      token = "integer"
+    elif current_char in [";", "(", ")", "+", "-", "*", "/"]:
+      lexeme += current_char
+      token = current_char
+    else:
+      raise ValueError("Invalid character: " + current_char)
+
+    current_char = source_code[1]
+
+  return token, lexeme
+
+
+def main():
+
+  with open("source_code.txt", "r") as f:
+    source_code = f.read()
+
+  tokens = []
+  for token, lexeme in lexer(source_code):
+    tokens.append((token, lexeme))
+
+  with open("output.txt", "w") as f:
+    for token, lexeme in tokens:
+      f.write("token: {}\tlexeme: {}\n".format(token, lexeme))
+
+
+if __name__ == "__main__":
+  main(
